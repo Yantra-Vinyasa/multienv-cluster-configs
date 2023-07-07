@@ -1,0 +1,9 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: rhacm-observability
+  namespace: open-cluster-management-addon-observability
+spec:
+  generateBucketName: rhacm-observability
+  storageClassName: ocs-storagecluster-ceph-rgw
