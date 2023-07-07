@@ -1,0 +1,39 @@
+---
+default:
+  app:
+    annotations:
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
+    enabled: true
+    enableAutoSync: true
+    autoSyncPrune: false
+    project: cluster-config
+    destination:
+      namespace: openshift-gitops
+      server: https://kubernetes.default.svc
+    source:
+      repoURL: git@github.com:Yantra-Vinyasa/multienv-cluster-configs.git
+      targetRevision: main
+
+projects:
+  cluster-config:
+    annotations:
+      argocd.argoproj.io/sync-wave: '-2'
+    description: Project for overall cluster configuration
+    namespace: openshift-gitops
+    sourceRepos:
+    - git@github.com:Yantra-Vinyasa/multienv-cluster-configs.git
+    destinations: |
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+    extraFields: |
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+
+applications:
+
+  openshift-logging:
+    annotations:
+      argocd.argoproj.io/sync-wave: '10'
+    source:
+      path: sites/bharat/dev-01/openshift-logging
