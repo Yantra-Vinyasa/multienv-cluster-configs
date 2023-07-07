@@ -1,0 +1,13 @@
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: logging-loki-s3
+  namespace: openshift-logging
+data:
+  access_key_id: '{{ fromSecret "openshift-logging" "asgard" "AWS_ACCESS_KEY_ID" }}'
+  access_key_secret: '{{ fromSecret "openshift-logging" "asgard" "AWS_SECRET_ACCESS_KEY" }}'
+  bucketnames: '{{ fromConfigMap "openshift-logging" "asgard" "BUCKET_NAME" | base64enc }}'
+  endpoint: '{{ printf "https://%s:443" (fromConfigMap "openshift-logging" "asgard" "BUCKET_HOST") | base64enc }}'
+  region: '{{ fromConfigMap "openshift-logging" "asgard" "BUCKET_REGION" | base64enc }}'
+type: Opaque
