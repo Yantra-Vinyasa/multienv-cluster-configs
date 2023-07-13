@@ -1,0 +1,35 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: openshift-logging
+placementBindingDefaults:
+  name: "placementbinding-openshift-logging"
+policyDefaults:
+  namespace: example-policies-hub
+  consolidateManifests: false
+  categories:
+  - OM Observability Management
+  controls:
+  - OM OpenShift Logging
+  standards:
+  - Example Baseline 2023v1
+  remediationAction: inform
+  complianceType: musthave
+  pruneObjectBehavior: "DeleteIfCreated"
+
+policies:
+- name: openshift-logging
+  manifests:
+  - path: openshift-logging/
+  remediationAction: enforce
+  dependencies:
+  - name: odf-storagecluster
+
+policySets:
+- name: "openshift-logging"
+  description: "openshift-logging setup"
+  policies:
+  - openshift-logging
+  placement:
+    placementPath: placement.yaml

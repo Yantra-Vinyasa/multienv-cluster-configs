@@ -1,0 +1,33 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: rhacm-observability
+placementBindingDefaults:
+  name: "placementbinding-rhacm-observability"
+policyDefaults:
+  namespace: example-policies-hub
+  consolidateManifests: false
+  categories:
+  - OM Observability Management
+  controls:
+  - OM Multi-Cluster Observability
+  standards:
+  - Example Baseline 2023v1
+  remediationAction: inform
+  complianceType: musthave
+  pruneObjectBehavior: "DeleteIfCreated"
+
+policies:
+- name: rhacm-observability
+  manifests:
+  - path: rhacm-observability/
+  remediationAction: enforce
+
+policySets:
+- name: "rhacm-observability"
+  description: "rhacm-observability setup"
+  policies:
+  - rhacm-observability
+  placement:
+    placementPath: placement.yaml

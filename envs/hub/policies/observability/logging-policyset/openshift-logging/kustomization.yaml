@@ -1,0 +1,17 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../../../../base/observability/openshift-logging/
+
+patches:
+# Patches the subscription channel
+- path: clusterlogging-patch-channel.yaml
+  target:
+    kind: Subscription
+    name: cluster-logging
+
+- path: loki-patch-channel.yaml
+  target:
+    kind: Subscription
+    name: loki-operator
