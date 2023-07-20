@@ -1,0 +1,8 @@
+---
+# NS for group-sync-operator
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: group-sync-operator
+  annotations:
+

@@ -1,0 +1,12 @@
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  annotations:
+  name: ldap-groupsync
+  namespace: group-sync-operator
+spec:
+  providers:
+  - ldap:
+    name: ldap
+  schedule: '*/5 * * * *'
